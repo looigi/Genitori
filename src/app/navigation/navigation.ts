@@ -16,6 +16,40 @@ export const navigation: FuseNavigation[] = [
                 url      : '/home',
             },
             {
+                id       : 'dirigenti',
+                title    : 'dirigenti',
+                translate: 'NAV.DIRIGENTI.TITLE',
+                type     : 'collapsable',
+                icon     : 'child_care',
+                children : [
+                ]
+            },
+            {
+                id       : 'allenatori',
+                title    : 'allenatori',
+                translate: 'NAV.ALLENATORI.TITLE',
+                type     : 'collapsable',
+                icon     : 'child_care',
+                children : [
+                    {
+                        id       : 'calendario',
+                        title    : 'calendario',
+                        translate: 'NAV.CALENDARIO.TITLE',
+                        type     : 'item',
+                        icon     : 'calendar_today',
+                        url      : '/reminder',
+                    },
+                    {
+                        id       : 'convocazioni',
+                        title    : 'convocazioni',
+                        translate: 'NAV.CONVOCAZIONI.TITLE',
+                        type     : 'item',
+                        icon     : 'calendar_today',
+                        url      : '/calendario',
+                    },
+                ]
+            },
+            {
                 id       : 'genitori',
                 title    : 'genitori',
                 translate: 'NAV.GENITORI.TITLE',
@@ -40,16 +74,16 @@ export const navigation: FuseNavigation[] = [
                         url       : '/documentazione',
                         exactMatch: true
                     },
-                    {
-                        id        : 'contatti',
-                        title     : 'Contatti',
-                        translate: 'NAV.CONTATTI.TITLE',
-                        type      : 'item',
-                        icon     : 'account_circle',
-                        url       : '/contatti',
-                        exactMatch: true
-                    },
                 ]
+            },
+            {
+                id        : 'contatti',
+                title     : 'Contatti',
+                translate: 'NAV.CONTATTI.TITLE',
+                type      : 'item',
+                icon     : 'account_circle',
+                url       : '/contatti',
+                exactMatch: true
             },
         ]
     }

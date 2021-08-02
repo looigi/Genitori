@@ -772,7 +772,7 @@ export class VariabiliGlobali {
                   break;
               case 'GENITORE':
                   r.forEach(element => {
-                      if (element.id === 'genitori' || element.id === 'home') {
+                      if (element.id === 'genitori' || element.id === 'home' || element.id === 'contatti') {
                         if (element.children) {
                             const rr = element.children;
                             const nuovo = new Array();
@@ -807,10 +807,26 @@ export class VariabiliGlobali {
                   navigation2[0].children = nuovo2;
                   break;
               case 'DIRIGENTE GENITORE':
+                r.forEach(element => {
+                  if (element.id === 'dirigenti' || element.id === 'genitori' || element.id === 'home' || element.id === 'contatti') {
+                    if (element.children) {
+                        const rr = element.children;
+                        const nuovo = new Array();
+                        rr.forEach(element2 => {
+                            const rigaFiglio = element2.id.toUpperCase().trim();
+                            // console.log('Controllo figlio:', rigaPadre, rigaFiglio);
+                            nuovo.push(element2);
+                        });
+                        element.children = nuovo;
+                    }
+                    nuovo2.push(element);
+                  }
+                });
+                navigation2[0].children = nuovo2;
+                break;
+
               case 'DIRIGENTE':
-              case 'ALLENATORE':
-              case 'ALLENATORE GENITORE':
-                  r.forEach(element => {
+                  /* r.forEach(element => {
                       const rigaPadre = element.id.toUpperCase().trim();
                       // console.log('Controllo padre:', rigaPadre);
                       let aggiungi = false;
@@ -856,11 +872,66 @@ export class VariabiliGlobali {
                   });
                   navigation2[0].children = nuovo2;
                   // console.log(this.navigation2[0]);
-                  break;
-  
+                  break; */
+                  r.forEach(element => {
+                    if (element.id === 'dirigenti' || element.id === 'home' || element.id === 'contatti') {
+                      if (element.children) {
+                          const rr = element.children;
+                          const nuovo = new Array();
+                          rr.forEach(element2 => {
+                              const rigaFiglio = element2.id.toUpperCase().trim();
+                              // console.log('Controllo figlio:', rigaPadre, rigaFiglio);
+                              nuovo.push(element2);
+                          });
+                          element.children = nuovo;
+                      }
+                      nuovo2.push(element);
+                    }
+                });
+                navigation2[0].children = nuovo2;
+                break;
+
+              case 'ALLENATORE':
+                r.forEach(element => {
+                  if (element.id === 'allenatori' || element.id === 'home' || element.id === 'contatti') {
+                    if (element.children) {
+                        const rr = element.children;
+                        const nuovo = new Array();
+                        rr.forEach(element2 => {
+                            const rigaFiglio = element2.id.toUpperCase().trim();
+                            // console.log('Controllo figlio:', rigaPadre, rigaFiglio);
+                            nuovo.push(element2);
+                        });
+                        element.children = nuovo;
+                    }
+                    nuovo2.push(element);
+                  }
+                });
+                navigation2[0].children = nuovo2;
+                break;
+
+              case 'ALLENATORE GENITORE':
+                r.forEach(element => {
+                  if (element.id === 'allenatori' || element.id === 'genitori' || element.id === 'home' || element.id === 'contatti') {
+                    if (element.children) {
+                        const rr = element.children;
+                        const nuovo = new Array();
+                        rr.forEach(element2 => {
+                            const rigaFiglio = element2.id.toUpperCase().trim();
+                            // console.log('Controllo figlio:', rigaPadre, rigaFiglio);
+                            nuovo.push(element2);
+                        });
+                        element.children = nuovo;
+                    }
+                    nuovo2.push(element);
+                  }
+                });
+                navigation2[0].children = nuovo2;
+                break;
+
               default:
-                  navigation2[0] = null;
-                  break;
+                navigation2[0] = null;
+                break;
           }       
 
           this.navigation2 = navigation2;

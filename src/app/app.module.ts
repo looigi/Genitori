@@ -52,6 +52,9 @@ import { ConfirmationDialogComponent } from './componenti/confirm/confirm.compon
 import { ConfirmationDialogModule } from './componenti/confirm/confirm.module';
 
 import { WidgetIndicatoriModule } from './componenti/widget_indicatori/widget_indicatori.module';
+import { CalendarModule } from './main/calendar/calendar.module';
+import { ReminderModule } from './main/reminder/reminder.module';
+import { CreaPartitaModule } from './main/creapartita/creapartita.module';
 
 registerLocaleData(localeIt);
 
@@ -120,6 +123,10 @@ const appRoutes: Routes = [
         WidgetCountModule,        
         ConfirmationDialogModule,
         WidgetIndicatoriModule,
+
+        CalendarModule,
+        ReminderModule,
+        CreaPartitaModule
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'it-IT' },

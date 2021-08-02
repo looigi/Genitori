@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.inCalcio.it.genitori;
+package com.inCalcio.it.utenti;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

@@ -8,7 +8,7 @@
   },
   "installed_plugins": {
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.inCalcio.it.genitori"
+      "PACKAGE_NAME": "com.inCalcio.it.utenti"
     }
   },
   "dependent_plugins": {}

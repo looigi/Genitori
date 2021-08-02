@@ -1,0 +1,7 @@
+{ 
+    "urlWS": "https://svilupposervice.incalcio.cloud/", 
+    "urlPerUpload": "https://sviluppomedia.incalcio.cloud/", 
+    "versione": "01.01.01", 
+    "urlFirma": "https://sviluppofirma.incalcio.cloud", 
+    "urlGestionePartita": "https://sviluppogestpartita.incalcio.cloud" 
+}

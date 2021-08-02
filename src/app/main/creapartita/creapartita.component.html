@@ -1,0 +1,494 @@
+    <div *ngIf="mascheraEditAperta" class="oscura"></div>
+  
+    <div class="mascheraPartita" *ngIf="mascheraEditAperta && strutturaPerEdit" style="position: fixed !important; overflow: hidden; top: 85px;">
+        <div class="content">
+            <div class="horizontal-stepper-wrapper">
+                <mat-tab-group>
+                    <mat-tab label="Dati Generali">
+                        <div fxFlex="1 0 auto" fxLayout="column" class="tab-interno">
+                            <sceltacategoria-component
+                                [disabilitata]="comboDisabilitata"
+                                [categoriaSelezionata]="strutturaPerEdit.idCategoria"
+                                [tutti]="false"
+                                [ritornaVecchioValoreAllAvvio]="false"
+
+                                (RitornoValore)="selezioneCategoriaPerEdit($event)"
+                                (RitornoRisTempi)="selezioneRisTempiCat($event)"
+                            >
+                            </sceltacategoria-component>
+
+                            <div style = "width: 100%;">
+                                <div style="width: 50%; float: left;">
+                                    <campo_testo
+                                        [soloLettura] = "solaLettura"
+                                        [nomeCampo]="strutturaPerEdit.DataOra"
+                                        [Titolo]="'Data Partita'"
+                                        [maiuscole]="false"
+                                        [tipoCampo]="'data'"
+                                        [obbligatorio]="true"
+        
+                                        (ritorno)="strutturaPerEdit.DataOra = $event; strutturaPerEdit.DataAppuntamento == '' ? $event : strutturaPerEdit.DataAppuntamento; cambioData(null);"
+                                    ></campo_testo>        
+                                </div>
+                                <div style="width: 50%; float: left;">
+                                    <campo_testo
+                                        [soloLettura] = "solaLettura"
+                                        [lunghezzaMassima] ="10"
+                                        [nomeCampo]="strutturaPerEdit.OraPartita"
+                                        [Titolo]="'Ora Partita'"
+                                        [maiuscole]="false"
+                                        [obbligatorio]="true"
+                                        [tipoCampo]="'time'"
+        
+                                        (ritorno)="strutturaPerEdit.OraPartita = $event; calcolaOraAppuntamento(); cambioData(null);"
+                                    ></campo_testo>                                        
+                                </div>
+                            </div>
+
+                            <div style = "width: 100%;">
+                                <div style="width: 50%; float: left;">
+                                    <campo_testo
+                                        [soloLettura] = "solaLettura"
+                                        [nomeCampo]="strutturaPerEdit.DataAppuntamento"
+                                        [Titolo]="'Data Appuntamento'"
+                                        [maiuscole]="false"
+                                        [tipoCampo]="'data'"
+                                        [obbligatorio]="true"
+        
+                                        (ritorno)="strutturaPerEdit.DataAppuntamento = $event;"
+                                    ></campo_testo>        
+                                </div>
+                                <div style="width: 50%; float: left;">
+                                    <campo_testo
+                                        [soloLettura] = "solaLettura"
+                                        [lunghezzaMassima] ="10"
+                                        [nomeCampo]="strutturaPerEdit.OraAppuntamento"
+                                        [Titolo]="'Ora Appuntamento'"
+                                        [maiuscole]="false"
+                                        [obbligatorio]="true"
+                                        [tipoCampo]="'time'"
+        
+                                        (ritorno)="strutturaPerEdit.OraAppuntamento = $event;"
+                                    ></campo_testo>                                        
+                                </div>
+                            </div>
+
+                            <campo_testo
+                                [soloLettura] = "solaLettura"
+                                [valoreDefault]="strutturaPerEdit.Casa"
+                                [Titolo]="'Luogo'"
+                                [obbligatorio]="true"
+                                [datiPassati]="campiCasa"
+                                [tipoCampo]="'tendina'"
+                                [icona]="'home'"
+                                [campoID]="'idCasa'"
+                                [campoDescrizione]="'Descrizione'"
+
+                                (ritorno)="selezioneCasa($event);"
+                            ></campo_testo>
+
+                            <campo_testo
+                                [soloLettura] = "solaLettura"
+                                [lunghezzaMassima] ="255"
+                                [nomeCampo]="strutturaPerEdit.LuogoAppuntamento"
+                                [Titolo]="'Luogo Appuntamento'"
+                                [maiuscole]="false"
+                                [obbligatorio]="false"
+                                [tipoCampo]="'text'"
+
+                                (ritorno)="strutturaPerEdit.LuogoAppuntamento = $event;"
+                            ></campo_testo>                                        
+
+                            <campo_testo
+                                [soloLettura] = "solaLettura"
+                                [valoreDefault]="strutturaPerEdit.MezzoTrasporto"
+                                [Titolo]="'Mezzo di trasporto'"
+                                [obbligatorio]="true"
+                                [datiPassati]="datiMezziTrasporto"
+                                [tipoCampo]="'tendina'"
+                                [campoID]="'id'"
+                                [icona]="'commute'"
+                                [campoDescrizione]="'Descrizione'"
+
+                                (ritorno)="selezioneMezzoTrasporto($event);"
+                            ></campo_testo>
+
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td colspan="2">
+                                        <campo_testo
+                                            [soloLettura] = "solaLettura"
+                                            [valoreDefault]="strutturaPerEdit.idTipologia"
+                                            [Titolo]="'Tipologia Partita'"
+                                            [obbligatorio]="true"
+                                            [datiPassati]="datiTipologie"
+                                            [tipoCampo]="'tendina'"
+                                            [campoID]="'idTipologia'"
+                                            [icona]="'dns'"
+                                            [campoDescrizione]="'Descrizione'"
+        
+                                            (ritorno)="selezioneTipologia($event);"
+                                        ></campo_testo>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%; text-align: center;">
+                                        <!-- <img [src]="immagineAllenatore" style="width: 75px; height: 75px;" (error)="checkImage($event)"/> -->
+                                        <immagine_griglia-component
+                                            [immagine]="immagineAllenatore"
+                                        >
+                                        </immagine_griglia-component>                                
+                                    </td>
+                                    <td style="width: 80%;">
+                                        <campo_testo
+                                            [soloLettura] = "solaLettura"
+                                            [valoreDefault]="strutturaPerEdit.idAllenatore"
+                                            [Titolo]="'Allenatore'"
+                                            [obbligatorio]="true"
+                                            [datiPassati]="datiAllenatori"
+                                            [tipoCampo]="'tendina'"
+                                            [icona]="'directions_run'"
+                                            [campoID]="'idAllenatore'"
+                                            [campoDescrizione]="'Tutto'"
+            
+                                            (ritorno)="selezioneAllenatore($event);"
+                                        ></campo_testo>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <campo_testo
+                                            [soloLettura] = "true"
+                                            [nomeCampo]="dirigenti"
+                                            [Titolo]="'Dirigenti'"
+                                            [maiuscole]="true"
+                                            [lunghezzaMassima]="100"
+                                            [obbligatorio]="false"
+                                            [tipoCampo]="'text'"
+                                            [icona]="'home'"
+                                        ></campo_testo>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%; text-align: center;">
+                                        <!-- <img [src]="immagineAvversario" style="width: 75px; height: 75px;" (error)="checkImage($event)"/> -->
+                                        <immagine_griglia-component
+                                            [immagine]="immagineAvversario"
+                                        >
+                                        </immagine_griglia-component>
+                                    </td>
+                                    <td style="width: 80%;">
+                                        <div style="width: 70%; float: left;">
+                                            <campo_testo
+                                                [soloLettura] = "solaLettura"
+                                                [valoreDefault]="strutturaPerEdit.idAvversario"
+                                                [Titolo]="'Avversario'"
+                                                [obbligatorio]="true"
+                                                [datiPassati]="filteredAvversari"
+                                                [icona]="'supervised_user_circle'"
+                                                [tipoCampo]="'tendina'"
+                                                [campoID]="'idAvversario'"
+                                                [campoDescrizione]="'Descrizione'"
+                
+                                                (ritorno)="selezioneAvversario($event);"
+                                            ></campo_testo>
+                                        </div>
+                                        <div style="width: 28%; float: left; text-align: center; margin-top: 4px; height: 60px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px; margin-left: 5px;">
+                                            <mat-icon style="color: black;">search</mat-icon>
+                                            <input placeholder="Ricerca" fxFlex [(ngModel)]="ricercaAvv" (keyup)="updateFilter(ricercaAvv)" style="width: 60%;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                                    <td colspan="2">
+                                        <div *ngIf="strutturaPerEdit.Casa !== 'S'">
+                                            <campo_testo
+                                                [soloLettura] = "strutturaPerEdit === 'N'"
+                                                [lunghezzaMassima] ="50"
+                                                [nomeCampo]="indirizzoCampoEsterno"
+                                                [Titolo]="'Indirizzo Campo'"
+                                                [maiuscole]="false"
+                                                [icona]="'location_on'"
+                                                [obbligatorio]="false"
+                                                [tipoCampo]="'text'"
+            
+                                                (ritorno)="indirizzoCampoEsterno = $event;"
+                                            ></campo_testo>                                
+                                        </div>
+                                    </td>
+                                </tr> -->
+                                <!-- <tr>
+                                    <td style="width: 20%; text-align: center;">
+                                        <img [src]="immagineArbitro" style="width: 75px; height: 75px;" (error)="checkImage($event)"/>
+                                    </td>
+                                    <td style="width: 80%;">
+                                        <campo_testo
+                                            [soloLettura] = "solaLettura"
+                                            [valoreDefault]="strutturaPerEdit.idArbitro"
+                                            [Titolo]="'Arbitro'"
+                                            [obbligatorio]="true"
+                                            [datiPassati]="datiArbitri"
+                                            [tipoCampo]="'tendina'"
+                                            [icona]="'how_to_vote'"
+                                            [campoID]="'idArbitro'"
+                                            [campoDescrizione]="'Tutto'"
+            
+                                            (ritorno)="selezioneArbitro($event);"
+                                        ></campo_testo>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <campo_testo
+                                            [soloLettura] = "solaLettura"
+                                            [valoreDefault]="strutturaPerEdit.RisultatoATempi"
+                                            [Titolo]="'Risultato a tempi'"
+                                            [obbligatorio]="true"
+                                            [datiPassati]="datiRisTempo"
+                                            [tipoCampo]="'tendina'"
+                                            [icona]="'list_alt'"
+                                            [campoID]="'idRisTempo'"
+                                            [campoDescrizione]="'Descrizione'"
+            
+                                            (ritorno)="selezioneRisTempi($event);"
+                                        ></campo_testo>
+                                    </td>
+                                </tr> -->
+
+                                <tr>
+                                    <td colspan="2">
+                                        <div style="width: 100%; border: 1px solid #e0e0e0; padding-top: 20px; height: 60px; margin-bottom: 10px; padding: 15px; border-radius: 6px;">
+                                            <div style="width: 50%; float: left; padding-top: 6px;">
+                                                <mat-label>Shoot Out</mat-label>
+                                            </div>
+                                            <div style="width: 50%; float: left; text-align: right;">
+                                                <mat-checkbox
+                                                    [disabled] = "solaLettura"
+                                                    [checked]="strutturaPerEdit.ShootOut" 
+                                                    (change)="cambioStatoShootOut($event)">
+                                                </mat-checkbox>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <campo_testo
+                                            [soloLettura] = "solaLettura"
+                                            [valoreDefault]="strutturaPerEdit.idNumeroTempi"
+                                            [Titolo]="'Numero tempi'"
+                                            [obbligatorio]="true"
+                                            [datiPassati]="datiTempi"
+                                            [tipoCampo]="'tendina'"
+                                            [icona]="'watch'"
+                                            [campoID]="'id'"
+                                            [campoDescrizione]="'Descrizione'"
+        
+                                            (ritorno)="selezioneTempi($event);"
+                                        ></campo_testo>    
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <div style="width: 100%; border: 1px solid #e0e0e0; height: 60px; margin-bottom: 10px; padding: 15px; border-radius: 6px;">
+                                            <div style="width: 50%; float: left; padding-top: 6px;">
+                                                <mat-label>Partita con rigori</mat-label>
+                                            </div>
+                                            <div style="width: 50%; float: left; text-align: right;">
+                                                <mat-checkbox
+                                                    [disabled] = "solaLettura"
+                                                    [checked]="strutturaPerEdit.PartitaConRigori" 
+                                                    (change)="cambioStatoPcR($event)">
+                                                </mat-checkbox>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <campo_testo
+                                            [soloLettura] = "solaLettura"
+                                            [lunghezzaMassima] ="255"
+                                            [nomeCampo]="strutturaPerEdit.Note"
+                                            [Titolo]="'Note'"
+                                            [maiuscole]="false"
+                                            [icona]="'comment'"
+                                            [obbligatorio]="false"
+                                            [tipoCampo]="'textarea'"
+            
+                                            (ritorno)="strutturaPerEdit.Note = $event;"
+                                        ></campo_testo>                                
+                                    </td>
+                                </tr>
+                            </table>                                                        
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="center center" class="sezione-tasti">
+                            <button *ngIf="!soloVisualizzazione && strutturaPerEdit && strutturaPerEdit.DataOra && strutturaPerEdit.OraPartita && strutturaPerEdit.idTipologia &&
+                                strutturaPerEdit.idAllenatore && strutturaPerEdit.Casa && strutturaPerEdit.idAvversario &&
+                                strutturaPerEdit.RisultatoATempi && dataCorretta == true"
+                                mat-raised-button type="button" color="accent" (click)="salvaDati('N', false)">
+                                Salva
+                            </button>
+                            &nbsp;
+                            <button mat-raised-button type="button" color="warn" (click)="chiudiMascheraEdit(false)">
+                                Chiudi
+                            </button>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Convocati">
+                        <div fxFlex="1 0 auto" fxLayout="column" class="tab-interno">
+                            <div style="width: 100%; height: 100%;">
+                                <div style="width: 50%; float: left; height: 100%; overflow: auto;">
+                                    <div style="width: 100%; text-align: center; padding-top: -5px; border: 1px solid #999; background-color: #e2e2e2;">
+                                        <h3>NON Convocati</h3>
+                                    </div>
+                                    <div style="width: 100%; float: left;">
+                                        <griglia2
+                                            [titoloGriglia]="titoloGrigliaGioc1"
+                                            [dati]="gridDataGiocNonConv"
+                                            [pageSize]="10"
+                                            [displayedColumns]="columnsGioc1"
+                                            [tastoDelete]="false"
+                                            [tastoNew]="false"
+                                            [tastoShow]="false"
+                                            [tastoEdit]="false"
+                                            [tastoRefresh]="false"
+                                            [mostraHeader]="false"
+                                            [pageSize]="99"
+                                            [campoRicerca]="'Nominativo'"
+                                            [nomeMaschera]="'Da Convocare'"
+                                            [icona]="'supervised_user_circle'"
+                                                    
+                                            (cellClick)="clickSuCellaGioc1($event)"
+                                            >
+                                        </griglia2>                                    
+                                    </div>
+                                </div>
+                                <div style="width: 50%; float: left; height: 100%; overflow: auto;">
+                                    <div style="width: 100%; text-align: center; border: 1px solid #999; background-color: #e2e2e2;">
+                                        <h3>Convocati</h3>
+                                    </div>
+                                    <div style="width: 100%;  float: left;">
+                                        <griglia2
+                                            [titoloGriglia]="titoloGrigliaGioc2"
+                                            [dati]="gridDataGiocConv"
+                                            [displayedColumns]="columnsGioc2"
+                                            [tastoDelete]="false"
+                                            [tastoNew]="false"
+                                            [tastoShow]="false"
+                                            [tastoEdit]="false"
+                                            [mostraHeader]="false"
+                                            [tastoRefresh]="false"
+                                            [pageSize]="99"
+                                            [campoRicerca]="'Nominativo'"
+                                            [nomeMaschera]="'Convocati'"
+                                            [icona]="'supervised_user_circle'"
+                    
+                                            (cellClick)="clickSuCellaGioc2($event)"
+                                            >
+                                        </griglia2>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="center center" class="sezione-tasti">
+                            <div style="width: 50%; float: left; text-align: left;">
+                                <button mat-raised-button type="button" color="accent" (click)="salvaDati('S', false)">
+                                    Invia mail di convocazione
+                                </button>
+                            </div>
+                            <div style="width: 50%; float: left; text-align: right;">
+                                <button *ngIf="!soloVisualizzazione && strutturaPerEdit && strutturaPerEdit.DataOra && strutturaPerEdit.OraPartita && strutturaPerEdit.idTipologia &&
+                                    strutturaPerEdit.idAllenatore && strutturaPerEdit.Casa && strutturaPerEdit.idAvversario &&
+                                    strutturaPerEdit.RisultatoATempi && dataCorretta == true"
+                                    mat-raised-button type="button" color="accent" (click)="salvaDati('N', false)">
+                                    Salva
+                                </button>
+                                &nbsp;
+                                <button mat-raised-button type="button" color="warn" (click)="chiudiMascheraEdit(false)">
+                                    Chiudi
+                                </button>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Risposta Convocazioni">
+                        <div fxFlex="1 0 auto" fxLayout="column" class="tab-interno">
+                            <div style="width: 100%; text-align: center; border: 1px solid #999; background-color: #e2e2e2;"><h3>Risposte convocazioni</h3></div>
+                            <griglia2
+                                [titoloGriglia]="titoloGrigliaGioc3"
+                                [dati]="gridDataGiocRisposte"
+                                [displayedColumns]="columnsGioc3"
+                                [tastoDelete]="false"
+                                [tastoNew]="false"
+                                [tastoShow]="false"
+                                [tastoEdit]="false"
+                                [mostraHeader]="false"
+                                [tastoRefresh]="false"
+                                [pageSize]="99"
+                                [campoRicerca]="'Nominativo'"
+                                [nomeMaschera]="'Risposte'"
+                                [icona]="'supervised_user_circle'"
+                            >
+                            </griglia2>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="center center" class="sezione-tasti">
+                            <button *ngIf="!soloVisualizzazione && strutturaPerEdit && strutturaPerEdit.DataOra && strutturaPerEdit.OraPartita && strutturaPerEdit.idTipologia &&
+                                strutturaPerEdit.idAllenatore && strutturaPerEdit.Casa && strutturaPerEdit.idAvversario &&
+                                strutturaPerEdit.RisultatoATempi && dataCorretta == true"
+                                mat-raised-button type="button" color="accent" (click)="salvaDati('N', false)">
+                                Salva
+                            </button>
+                            &nbsp;
+                            <button mat-raised-button type="button" color="warn" (click)="chiudiMascheraEdit(false)">
+                                Chiudi
+                            </button>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Convocazione">
+                        <div fxFlex="1 0 auto" fxLayout="column" class="tab-interno">
+                            <div style ="width: 100%; margin-top: 4px;">
+                            </div>
+                            <iframe id="iframeConvocazione" name= "iframeConvocazione"
+                                *ngIf="indirizzoConvocazione !== ''"
+                                style="width: 100%; height: 400px; margin-top: 10px;"
+                                [src]="sanitizer.bypassSecurityTrustResourceUrl(indirizzoConvocazione)"
+                            >
+                            </iframe>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="center center" class="sezione-tasti">
+                            <div style="width: 50%; float: left; text-align: left;">
+                                <button *ngIf="!soloVisualizzazione" mat-raised-button type="button" color="accent" (click)="creaConvocazione()">Crea conv.</button>
+                                &nbsp;
+                                <button mat-raised-button type="button" color="accent" *ngIf="indirizzoConvocazione !== ''" (click)="stampaConvocazione()">Stampa conv.</button>
+                                &nbsp;
+                                <button mat-raised-button type="button" color="accent" *ngIf="indirizzoConvocazione !== ''" (click)="inviaConvocazione()">Invia conv.</button>
+                            </div>
+                            <div style="width: 50%; float: left; text-align: right;">
+                                <button *ngIf="!soloVisualizzazione && strutturaPerEdit && strutturaPerEdit.DataOra && strutturaPerEdit.OraPartita && strutturaPerEdit.idTipologia &&
+                                    strutturaPerEdit.idAllenatore && strutturaPerEdit.Casa && strutturaPerEdit.idAvversario &&
+                                    strutturaPerEdit.RisultatoATempi && dataCorretta == true"
+                                    mat-raised-button type="button" color="accent" (click)="salvaDati('N', false)">
+                                    Salva
+                                </button>
+                                &nbsp;
+                                <button mat-raised-button type="button" color="warn" (click)="chiudiMascheraEdit(false)">
+                                    Chiudi
+                                </button>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+
+            </div>
+        </div>
+    </div>
