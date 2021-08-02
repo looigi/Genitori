@@ -1,0 +1,31 @@
+<div class="page-layout simple fullwidth" fusePerfectScrollbar>
+    <sceltacategoria-component
+        [categoriaSelezionata]="categoriaSelezionata"
+        [userName]="userName"
+    
+        (RitornoValore)="selezioneCategoria($event)"
+    >
+    </sceltacategoria-component> 
+
+    <div style="width: 100%; height: calc(100% - 67px);">
+        <griglia2
+          [titoloGriglia]="titoloGriglia"
+          [dati]="datiContatti"
+          [displayedColumns]="columns"
+          [tastoDelete]="false"
+          [tastoNew]="false"
+          [tastoShow]="false"
+          [tastoEdit]="false"
+          [tastoRefresh]="true"
+          [pageSize]="5"
+          [campoRicerca]="'Nominativo'"
+          [nomeMaschera]="'Contatti'"
+          [icona]="'account_circle'"
+          [caricamentoInCorso]="caricamentoDatiInCorso"
+          [tipiCampi]="tipiCampi"
+
+          (tastoRefreshEmit)="premutoRefresh($event)"
+          >
+        </griglia2>
+    </div>
+</div>

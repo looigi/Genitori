@@ -1,0 +1,368 @@
+<div id="login" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
+
+    <div id="login-intro" fxFlex fxHide fxShow.gt-xs>
+
+        <div class="logo" [@animate]="{value:'*',params:{scale:'0.2'}}">
+            <img src="assets/images/logoApplicazione.png">
+        </div>
+
+        <div class="title" [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
+            <span (click)="easter2()">Welcome to inCalcio!</span>
+        </div>
+
+        <div class="description" [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
+            L’unica applicazione che ti permette di semplificare la gestione della tua società di calcio!
+        </div>
+
+    </div>
+
+    <div id="login-form-wrapper" fusePerfectScrollbar
+         [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
+
+        <div id="login-form">
+
+            <div class="logo" fxHide.gt-xs >
+                <img src="assets/images/logoApplicazione.png">
+            </div>
+
+            <div class="title"><span (click)="easter()">LOGIN</span></div>
+
+            <form name="loginForm" [formGroup]="loginForm" novalidate>
+
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email">
+                    <mat-icon matSuffix class="secondary-text">mail</mat-icon>
+                    <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                        Email richiesta
+                    </mat-error>
+                    <mat-error
+                        *ngIf="!loginForm.get('email').hasError('required') &&
+                                loginForm.get('email').hasError('email')">
+                        Inserire una mail valida
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password">
+                    <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+                    <mat-error>
+                        Password richiesta
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
+                     fxLayoutAlign="space-between center">
+                    <mat-checkbox class="remember-me" aria-label="Remember Me" [checked]= "valueMemorizza" (change)="cambioStatoMemorizza($event)">
+                        Ricordami
+                    </mat-checkbox>
+
+                    <a class="forgot-password" (click)="passwordPersa();">
+                        Password dimenticata?
+                    </a>
+                </div>
+
+                <button mat-raised-button color="accent" class="submit-button" aria-label="LOGIN"
+                        [disabled]="loginForm.invalid" (click)="login()">
+                    LOGIN
+                </button>
+                <br />
+                <div style="width: 100%; text-align: center;">
+                    © Copyright 2021 | <a (click)="onNavigate('https://www.incalcio.it')" style="cursor: pointer;">www.incalcio.it</a> | info@incalcio.it | 
+                    <a (click)="privacyPolicy = true" style="cursor: pointer;">privacy policy</a>&nbsp;
+                    Vedotech Srl, Via Clauzetto 47, 00188 Roma - P.IVA 12577401008 | Tutti i diritti riservati
+                </div>
+
+                <div *ngIf="errMsg" style="width: 100%; text-align: center; margin-top: 10px">
+                    <div style="padding: 5px; width: 100%; text-align: center; border: 1px solid #999; background-color: #f45549; border-radius: 5px;">
+                        <span style="color: white;">{{errMsg}}</span>
+                    </div>
+                </div>
+              
+            </form>
+<!-- 
+            <div class="separator">
+                <span class="text">OR</span>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="start center">
+
+                <button mat-raised-button class="google">
+                    Log in with Google
+                </button>
+
+                <button mat-raised-button class="facebook">
+                    Log in with Facebook
+                </button>
+
+            </div>
+
+            <div class="register" fxLayout="column" fxLayoutAlign="center center">
+                <span class="text">Don't have an account?</span>
+                <a class="link" [routerLink]="'/pages/auth/register-2'">Create an account</a>
+            </div>
+        -->
+        </div>
+    </div>
+
+</div>
+
+<!-- 
+<button mat-icon-button class="warn mat-elevation-z2 theme-options-button"
+        (click)="toggleSidebarOpen('themeOptionsPanel')">
+    <mat-icon>settings</mat-icon>
+</button>
+
+<fuse-sidebar name="themeOptionsPanel" class="theme-options-sidebar" position="right" [invisibleOverlay]="true">
+    <fuse-theme-options></fuse-theme-options>
+</fuse-sidebar>
+-->
+
+<div 
+    *ngIf = "sceltaSuperUser === true"
+    style = "
+        position: absolute;
+        top: 25%;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+        background-color: white;
+        border: 1px solid #999;
+        border-radius: 3px;
+        -webkit-box-shadow: -1px -1px 18px -5px rgba(0,0,0,0.75);
+        -moz-box-shadow: -1px -1px 18px -5px rgba(0,0,0,0.75);
+        box-shadow: -1px -1px 18px -5px rgba(0,0,0,0.75);       
+        padding: 5px; 
+        overflow: auto;
+    ">
+
+    <div style="width: 100%;">
+        <div style="width: 94%; float: left;">
+            <h1>Scelta Squadra</h1>
+        </div>
+        <div style="width: 5%; margin-top: 20px; float: left; text-align: center;">
+            <mat-icon  title="Annulla" (click)="sceltaSuperUser = false" style="cursor: pointer;">cancel</mat-icon>
+        </div>
+        <div style="clear: both;"></div>
+        <hr />
+    </div>
+
+    <!-- <table style="width: 100%;" cellpadding="0" cellspacing="0">
+        <tr>
+            <th
+                style="width: 10%; text-align: center;"
+            >
+                id Sq.
+            </th>
+            <th
+                style="width: 1%; text-align: center;"
+            >
+                &nbsp;
+            </th>
+            <th
+                style="width: 34%; text-align: center;"
+            >
+                Squadra
+            </th>
+            <th
+                style="width: 1%; text-align: center;"
+            >
+                &nbsp;
+            </th>
+            <th
+                style="width: 23%; text-align: center;"
+            >
+                Valid. Licenza
+            </th>
+            <th
+                style="width: 1%; text-align: center;"
+            >
+                &nbsp;
+            </th>
+            <th
+                style="width: 14%; text-align: center;"
+            >
+                Tipologia
+            </th>
+            <th
+                style="width: 1%; text-align: center;"
+            >
+                &nbsp;
+            </th>
+            <th
+                style="width: 14%; text-align: center;"
+            >
+                Licenza
+            </th>
+        </tr>
+        <tr *ngFor="let item of squadre; index as i;">
+            <td *ngIf="item.idSquadra != 0"
+                (mouseover)="hover[i] = true"
+                (mouseleave)="hover[i] = false"
+                [style.background-color]="hover[i] == true  ? '#f00' : 'transparent'"
+                style="width: 10%; text-align: right;"
+            >
+                <span 
+                    style="font-size: 15px; cursor: pointer;" 
+                    (click)="sceltaSquadra(item.idSquadra, item.Squadra)">
+                    {{item.idSquadra}}
+                </span>
+            </td>
+            <td *ngIf="item.idSquadra != 0"
+                (mouseover)="hover[i] = true"
+                (mouseleave)="hover[i] = false"
+                [style.background-color]="hover[i] == true  ? '#f00' : 'transparent'"
+                style="width: 1%; text-align: right;"
+            >
+                <span 
+                    style="font-size: 15px; cursor: pointer;" 
+                    (click)="sceltaSquadra(item.idSquadra, item.Squadra)">
+                    &nbsp;
+                </span>
+            </td>
+            <td *ngIf="item.idSquadra != 0"
+                (mouseover)="hover[i] = true"
+                (mouseleave)="hover[i] = false"
+                [style.background-color]="hover[i] == true  ? '#f00' : 'transparent'"
+                style="width: 34%;"
+            >
+                <span 
+                    style="font-size: 15px; cursor: pointer;" 
+                    (click)="sceltaSquadra(item.idSquadra, item.Squadra)">
+                    {{item.Squadra}}
+                </span>
+            </td>
+            <td *ngIf="item.idSquadra != 0"
+                (mouseover)="hover[i] = true"
+                (mouseleave)="hover[i] = false"
+                [style.background-color]="hover[i] == true  ? '#f00' : 'transparent'"
+                style="width: 1%; text-align: right;"
+            >
+                <span 
+                    style="font-size: 15px; cursor: pointer;" 
+                    (click)="sceltaSquadra(item.idSquadra, item.Squadra)">
+                    &nbsp;
+                </span>
+            </td>
+            <td *ngIf="item.idSquadra != 0"
+                (mouseover)="hover[i] = true"
+                (mouseleave)="hover[i] = false"
+                [style.background-color]="hover[i] == true  ? '#f00' : 'transparent'"
+                style="width: 23%; text-align: right;"
+            >
+                <span 
+                    style="font-size: 15px; cursor: pointer;" 
+                    (click)="sceltaSquadra(item.idSquadra, item.Squadra)">
+                    {{item.DataScadenza}}
+                </span>
+            </td>
+            <td *ngIf="item.idSquadra != 0"
+                (mouseover)="hover[i] = true"
+                (mouseleave)="hover[i] = false"
+                [style.background-color]="hover[i] == true  ? '#f00' : 'transparent'"
+                style="width: 1%; text-align: right;"
+            >
+                <span 
+                    style="font-size: 15px; cursor: pointer;" 
+                    (click)="sceltaSquadra(item.idSquadra, item.Squadra)">
+                    &nbsp;
+                </span>
+            </td>
+            <td *ngIf="item.idSquadra != 0"
+                (mouseover)="hover[i] = true"
+                (mouseleave)="hover[i] = false"
+                [style.background-color]="hover[i] == true  ? '#f00' : 'transparent'"
+                style="width: 14%; text-align: right;"
+            >
+                <span 
+                    style="font-size: 15px; cursor: pointer;" 
+                    (click)="sceltaSquadra(item.idSquadra, item.Squadra)">
+                    {{item.Tipologia}}
+                </span>
+            </td>
+            <td *ngIf="item.idSquadra != 0"
+                (mouseover)="hover[i] = true"
+                (mouseleave)="hover[i] = false"
+                [style.background-color]="hover[i] == true  ? '#f00' : 'transparent'"
+                style="width: 1%; text-align: right;"
+            >
+                <span 
+                    style="font-size: 15px; cursor: pointer;" 
+                    (click)="sceltaSquadra(item.idSquadra, item.Squadra)">
+                    &nbsp;
+                </span>
+            </td>
+            <td *ngIf="item.idSquadra != 0"
+                (mouseover)="hover[i] = true"
+                (mouseleave)="hover[i] = false"
+                [style.background-color]="hover[i] == true  ? '#f00' : 'transparent'"
+                style="width: 14%; text-align: right;"
+            >
+                <span 
+                    style="font-size: 15px; cursor: pointer;" 
+                    (click)="sceltaSquadra(item.idSquadra, item.Squadra)">
+                    {{item.Licenza}}
+                </span>
+            </td>
+        </tr>
+    </table> -->
+</div>
+
+
+<!-- 3 volte rapido su scritta login e dopo 2 secondi su scritta welcome to in calcio -->
+<div *ngIf="apreEaster"
+    style="position: absolute; left: 30%; top: 30%; 
+        -webkit-box-shadow: 0px -5px 15px -5px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px -5px 153px -5px rgba(0,0,0,0.75);
+        box-shadow: 0px -5px 15px -5px rgba(0,0,0,0.75);
+        border: 1px solid #999; border-radius: 5px; background-color: white;
+        padding: 5px;"
+>
+    <div style="width: 500px;">
+        <div style="width: 30%; float: left;">
+            <img [src]="'http://looigi.no-ip.biz:100/App_Themes/Standard/Images/1-looigi/Immagine.png'" style="width: 100%; height: 100%;">    
+        </div>
+        <div style="width: 5%; float: left;">
+            &nbsp;
+        </div>
+        <div style="width: 64%; float: left;">
+            <div style="width: 100%; text-align: right;">
+                <mat-icon style="cursor: pointer; width: 26px; height: 26px; margin-top: 17px;" (click)="chiudiEaster();">close</mat-icon>
+            </div>
+            <br />
+            <span style="color: red; font-family: Arial;"><h1>inCalcio</h1></span>
+            <hr />
+            <span style="color: blue; font-family: Arial;"><h3>coded by Luigi Pecce</h3></span>
+        </div>
+    </div>
+</div>
+
+
+<div 
+    *ngIf="privacyPolicy === true"
+    style="
+        position: absolute;
+        background-color: white;
+        opacity: .9;
+        left: 5%;
+        top: 5%;
+        width: 90%;
+        height: 90%;
+        border-radius: 5px;
+        border: 1px solid #999;
+        -webkit-box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
+        box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
+        text-align: center;
+        overflow: auto;
+        z-index: 999;"
+    [innerHTML]="testoPolicyPrivacy"
+>
+ 
+</div>
+
+<div *ngIf="privacyPolicy === true" style="position: absolute; top: 5%; z-index: 9999; left: 92%;">
+   <img src="assets/icons/close.png" style="cursor: pointer; width: 25px; height: 25px;" (click)="privacyPolicy = false">
+</div>   

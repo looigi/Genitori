@@ -1,0 +1,85 @@
+<div class="page-layout simple fullwidth" fusePerfectScrollbar style="padding: 5px;">
+    <div *ngIf="nomePadre" style="width: 100%;">
+        <div style="width: 40%; float: left;">
+            <h2>{{nomePadre[variabiliGlobali.idFiglioScelto]}}</h2>&nbsp;
+        </div>
+        <div style="width: 40%; float: left;">
+            <campo_testo
+                [soloLettura] = "true"
+                [lunghezzaMassima] ="50"
+                [nomeCampo]="mail1[variabiliGlobali.idFiglioScelto]"
+                [Titolo]="'Mail Padre'"
+                [maiuscole]="false"
+                [icona]="'description'"
+                [obbligatorio]="false"
+                [tipoCampo]="'text'"
+            ></campo_testo>       
+        </div>
+        <div style="width: 20%; float: left; margin-top: 20px; text-align: center;">
+            <mat-checkbox
+                [disabled]="!mail1[variabiliGlobali.idFiglioScelto]"
+                [checked]="attiva1[variabiliGlobali.idFiglioScelto] === 'S'" 
+                (change)="cambioStato(1, $event)">
+            </mat-checkbox>
+            &nbsp;
+        </div>
+    </div>
+
+    <div *ngIf="nomeMadre" style="width: 100%;">
+        <div style="width: 40%; float: left;">
+            <h2>{{nomeMadre[variabiliGlobali.idFiglioScelto]}}</h2>&nbsp;
+        </div>
+        <div style="width: 40%; float: left;">
+            <campo_testo
+                [soloLettura] = "true"
+                [lunghezzaMassima] ="50"
+                [nomeCampo]="mail2[variabiliGlobali.idFiglioScelto]"
+                [Titolo]="'Mail Madre'"
+                [maiuscole]="false"
+                [icona]="'description'"
+                [obbligatorio]="false"
+                [tipoCampo]="'text'"
+            ></campo_testo>       
+        </div>
+        <div style="width: 20%; float: left; margin-top: 20px; text-align: center;">
+            <mat-checkbox
+                [disabled]="!mail2[variabiliGlobali.idFiglioScelto]"
+                [checked]="attiva2[variabiliGlobali.idFiglioScelto] === 'S'" 
+                (change)="cambioStato(2, $event)">
+            </mat-checkbox>
+            &nbsp;
+        </div>
+    </div>
+
+    <div *ngIf="nomeGiocatore" style="width: 100%;">
+        <div style="width: 40%; float: left;">
+            <h2>{{nomeGiocatore[variabiliGlobali.idFiglioScelto]}}</h2>&nbsp;
+        </div>
+        <div style="width: 40%; float: left;">
+            <campo_testo
+                [soloLettura] = "true"
+                [lunghezzaMassima] ="50"
+                [nomeCampo]="mail3[variabiliGlobali.idFiglioScelto]"
+                [Titolo]="'Mail Giocatore'"
+                [maiuscole]="false"
+                [icona]="'description'"
+                [obbligatorio]="false"
+                [tipoCampo]="'text'"
+            ></campo_testo>       
+        </div>
+        <div style="width: 20%; float: left; margin-top: 20px; text-align: center;">
+            <mat-checkbox
+                [disabled]="!mail3[variabiliGlobali.idFiglioScelto]"
+                [checked]="attiva3[variabiliGlobali.idFiglioScelto] === 'S'" 
+                (change)="cambioStato(3, $event)">
+            </mat-checkbox>
+            &nbsp;
+        </div>
+    </div>
+
+    <div style = "width: 100%; text-align: right;">
+        <button mat-raised-button type="button" color="accent" style="width: 200px;" (click)="salvaDati()">
+            Salva
+        </button>    
+    </div>
+</div>

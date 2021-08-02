@@ -1,0 +1,40 @@
+<mat-form-field appearance="outline" fxFlex="100">
+    <mat-label>{{Titolo}}</mat-label> 
+ 
+    <input
+        matInput 
+        [readonly]="solaLettura ? true : null"
+        (change)="cambiamentoData($event)"     
+        [formControl]="campo" 
+        [required]="obbligatorio ? true : null"
+        placeholder="{{testoPlaceholder}}"
+        [owlDateTime]="dt2"
+        [owlDateTimeTrigger]="dt2"
+        value="{{nomeCampo}}">
+        
+<!-- <input
+        *ngIf="nomeCampo"
+        [(ngModel)]="nomeCampo"
+        matInput 
+        [formControl]="campo" 
+        (ngModelChange)="cambiamentoData($event)"
+        ngDefaultControl 
+        [required]="obbligatorio ? true : null"
+        [readonly]="solaLettura ? true : null"
+        placeholder="{{testoPlaceholder}}"
+        [owlDateTime]="dt2"
+        [owlDateTimeTrigger]="dt2"
+    > -->
+
+    <owl-date-time
+        #dt2
+        [disabled]="solaLettura ? true : null"
+        [startAt]="nomeCampo"
+        [pickerType]="tipologia"
+    >
+    </owl-date-time>
+    <mat-icon *ngIf="icona" matSuffix class="secondary-text">{{icona}}</mat-icon>
+    <mat-error *ngIf="obbligatorio == true && !nomeCampo">
+        Data obbligatoria o non valida
+    </mat-error>    
+</mat-form-field>

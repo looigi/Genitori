@@ -1,0 +1,237 @@
+<!-- <div *ngIf="caricamentoInCorso2 !== 'OK'" class="oscura" 
+    style="background-image: url('assets/images/giphy.gif'); background-position: center; background-repeat: no-repeat;">
+</div> -->
+
+<div style="width: 100%; height: 99%; overflow: hidden;">
+    <!-- HEADER -->
+    <div *ngIf="mostraHeader === true" style="width: 100%; height: auto; float: left;">
+        <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start"
+            fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+                <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-sm>
+                    <mat-icon>menu</mat-icon>
+                </button>
+
+                <div class="logo" fxLayout="row" fxLayoutAlign="start left">
+                    <mat-icon *ngIf="icona" class="logo-icon mr-16" style="margin-top: 5px;"
+                            [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">{{ icona }}
+                    </mat-icon>
+                    <span *ngIf="nomeMaschera2" class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                        {{ nomeMaschera2 }}
+                    </span>
+                </div>
+
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+
+                <div class="search-wrapper mt-16 mt-sm-0">
+                    <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon style="color: black;">search</mat-icon>
+                        <input placeholder="Ricerca" fxFlex [(ngModel)]="ricerca" (keyup)="updateFilter(ricerca)">
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- / SEARCH -->
+
+            <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+                <div style="width: 100%; height: 50px;">
+                    <div style="width: 50%; float: left; margin-top: -8px;">
+                        <!-- <campo_testo
+                            [soloLettura] = "false"
+                            [valoreDefault]="numeroRighe"
+                            [Titolo]="'Righe'"
+                            [obbligatorio]="false"
+                            [tipoCampo]="'number'"
+                            [icona]="'format_align_left'"
+        
+                            (ritorno)="cambioNumeroRighe($event)"
+                        ></campo_testo> -->
+
+                        <campo_testo
+                            [soloLettura] = "false"
+                            [valoreDefault]="numeroRighe"
+                            [Titolo]="'Righe'"
+                            [obbligatorio]="false"
+                            [datiPassati]="datiRighe"
+                            [tipoCampo]="'tendina'"
+                            [icona]="'format_align_left'"
+                            [campoID]="'Descrizione'"
+                            [campoDescrizione]="'Descrizione'"
+
+                            (ritorno)="cambioNumeroRighe($event);"
+                        ></campo_testo>
+
+                    </div>
+                    <div style="width: 50%; float: left; text-align: right; margin-top: 16px;">
+                        <!-- *ngIf="tastoRefresh" -->
+                        <mat-icon style="cursor: pointer; color: white;" title="Refresh" (click)="premutoRefresh()">refresh</mat-icon>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- / HEADER -->
+
+    <div style="width: 100%; height: calc(100% - 103px); float: left;">
+        <div *ngIf="!rows" style="width: 99%; margin-top: 3px; border: 1px solid #cccccc; border-radius: 5px; height: 55px; margin: 3px;">
+            <div style="width: 20%; text-align: center; float: left; margin-top: 7px;">
+                <button *ngIf="tastoNew" mat-fab class="accent add-button" id="add-button" (click)="premutoNew()" aria-label="Nuovo" style="cursor: pointer; bottom: 1px;"
+                        [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}">
+                    <mat-icon style="margin-top: 6px; margin-left: 1px;" title="Nuovo elemento">add</mat-icon>
+                </button>
+            </div>                
+            <div style="width: 80%; text-align: center; float: left;">
+                <h3>Nessun dato presente</h3>
+            </div>
+        </div>
+        
+        <div *ngIf="rows" style="float:left; min-width: 100%; max-width: 100%; overflow: auto;">
+            <ngx-datatable
+                class="material"
+                [rows]="rows"
+                [columns]= "columns2"
+                [loadingIndicator]="loadingIndicator"
+                [columnMode]="ColumnMode.force"
+                [headerHeight]="20"
+                [footerHeight]="20"
+                [scrollbarH]="true"
+                [rowHeight]="'auto'"
+                [reorderable]="true"
+                [selected]="selected"
+                [selectionType]="selType"
+                [sortType]="SortType.single"
+                [limit]="pageSize2"
+                [offset]="paginaImpostata"
+
+                (reorder)="onReorder($event)"
+                (activate)="onActivate($event)"
+                (page)="onCambioPagina($event)"
+            >
+                <ngx-datatable-column *ngIf="selezioneMultipla" name="">
+                    <!-- <ng-template let-column="column" ngx-datatable-header-template>
+                        <mat-checkbox [checked]= "false" (change)="selezionaTutto($event)">
+                        </mat-checkbox>                
+                    </ng-template> -->
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <mat-checkbox [checked]= "checks[row.idRiga] == true ? true : false" (change)="selezioneRiga($event, row)">
+                        </mat-checkbox>
+                    </ng-template>
+                </ngx-datatable-column>
+                
+                <ngx-datatable-column  *ngIf="tastoNew==true || tastoShow==true || tastoEdit==true || tastoDelete==true || tastoOffline==true
+                    || tastoMail==true || tastoGestPartita==true || tastoStampaRicevuta==true">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        <div *ngIf="tastoNew==true">
+                            <button *ngIf="tastoNew" mat-fab class="accent add-button" id="add-button" (click)="premutoNew()" aria-label="Nuovo" style="cursor: pointer; bottom: 1px;"
+                                    [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}">
+                                <mat-icon style="margin-top: 6px; margin-left: 1px;" title="Nuovo elemento">add</mat-icon>
+                            </button>                    
+                        </div>
+                    </ng-template>
+                    
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <div *ngIf="tastoShow==true" style="float: left;">
+                            <mat-icon id="show_{{row['idRiga']}}" title="Visualizza" (click)="premutoShow(row)" style="cursor: pointer;">remove_red_eye</mat-icon>
+                        </div>
+                        
+                        <div *ngIf="tastoEdit==true" style="float: left;">
+                            <mat-icon id="edit_{{row['idRiga']}}" title="Modifica" (click)="premutoEdit(row)" style="cursor: pointer;">edit</mat-icon>
+                        </div>
+
+                        <div *ngIf="tastoDelete==true" style="float: left;">
+                            <mat-icon id="del_{{row['idRiga']}}" title="Elimina" (click)="premutoDelete(row)" style="cursor: pointer;">delete</mat-icon>
+                        </div>
+
+                        <div *ngIf="tastoOffline==true" style="float: left;">
+                            <mat-icon id="off_{{row['idRiga']}}" title="Switch On/Off Line" (click)="premutoOffLine(row)" style="cursor: pointer;">not_interested</mat-icon>
+                        </div>
+
+                        <div *ngIf="tastoMail==true" style="float: left;">
+                            <mat-icon id="off_{{row['idRiga']}}" title="Invia Mail" (click)="premutoMail(row)" style="cursor: pointer;">attach_email</mat-icon>
+                        </div>
+
+                        <div *ngIf="tastoGestPartita==true" style="float: left;">
+                            <mat-icon id="off_{{row['idRiga']}}" title="Gestisce Partita" (click)="premutoGestiscePartita(row)" style="cursor: pointer;">build</mat-icon>
+                        </div>
+
+                        <div *ngIf="tastoStampaRicevuta==true" style="float: left;">
+                            <mat-icon id="off_{{row['idRiga']}}" title="Stampa Ricevuta" (click)="premutoStampaRicevuta(row)" style="cursor: pointer;">receipt</mat-icon>
+                        </div>
+
+                        <div *ngIf="tastoStampaScontrino==true" style="float: left;">
+                            <mat-icon id="off_{{row['idRiga']}}" title="Stampa Scontrino" (click)="premutoStampaScontrino(row)" style="cursor: pointer;">theaters</mat-icon>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column> 
+
+                <ngx-datatable-column *ngFor="let col of columns; let i = index" [prop]="col">
+                    <ngx-datatable-column prop="orderStatus" [sortable]="true">
+                        <ng-template ngx-datatable-header-template let-sort="sortFn">
+                            <div *ngIf="col.toUpperCase().indexOf('IMMAGINE') == -1 && col.toUpperCase().indexOf('SEMAFORO') == -1" (click)="sort()">
+                                {{ nomiColonne[i] }}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <div *ngIf="col.toUpperCase().indexOf('SEMAFORO') > -1">
+                            <img *ngIf="prendeIconaSemaforo(0, value) !== ''" [src]="prendeIconaSemaforo(0, value)" [title]="prendeTitoloSemaforo(0, value)" style="width: 20px; height: 20px; cursor: pointer;" (click)="clickPallocco(1, row);" />
+                            <img *ngIf="prendeIconaSemaforo(1, value) !== ''" [src]="prendeIconaSemaforo(1, value)" [title]="prendeTitoloSemaforo(1, value)" style="width: 20px; height: 20px; cursor: pointer;" (click)="clickPallocco(2, row);" />
+                            <img *ngIf="prendeIconaSemaforo(2, value) !== ''" [src]="prendeIconaSemaforo(2, value)" [title]="prendeTitoloSemaforo(2, value)" style="width: 20px; height: 20px; cursor: pointer;" (click)="clickPallocco(3, row);" />
+                            <img *ngIf="prendeIconaSemaforo(3, value) !== ''" [src]="prendeIconaSemaforo(3, value)" [title]="prendeTitoloSemaforo(3, value)" style="width: 20px; height: 20px; cursor: pointer;" (click)="clickPallocco(4, row);" />
+                            <img *ngIf="prendeIconaSemaforo(4, value) !== ''" [src]="prendeIconaSemaforo(4, value)" [title]="prendeTitoloSemaforo(4, value)" style="width: 20px; height: 20px; cursor: pointer;" (click)="clickPallocco(5, row);" />
+                        </div>
+
+                        <div *ngIf="col.toUpperCase().indexOf('IMMAGINE') > -1 && col.toUpperCase().indexOf('IMMAGINECERT') == -1">
+                            <div style="width: 50px; height: 50px;">
+                                <immagine_griglia-component
+                                    [immagine]="value"
+                                    [puoIngrandire]="true"
+                                >
+                                </immagine_griglia-component>
+                            </div>
+                        </div>
+
+                        <div *ngIf="col.toUpperCase().indexOf('IMMAGINECERT') > -1 && value !== ''">
+                            <div style="width: 50px; height: 50px;">
+                                <img [src]="value" [title]="'Certificato scaduto o in scadenza'" style="width: 50px; height: 50px; cursor: pointer;" />
+                            </div>
+                        </div>
+
+                        <div *ngIf="col.toUpperCase().indexOf('IMMAGINE') == -1 && col.toUpperCase().indexOf('SEMAFORO') == -1">
+                            <span *ngIf="tipiCampi && tipiCampi[i] && (tipiCampi[i] == 'Testo' || tipiCampi[i] == '*')">
+                                {{ value }}
+                            </span>
+                            <span *ngIf="tipiCampi && tipiCampi[i] && tipiCampi[i] == 'Data'">
+                                {{ value | date }}
+                            </span>
+                            <span *ngIf="tipiCampi && tipiCampi[i] && tipiCampi[i] == 'Numero'" style="min-width: 90px; display: block; text-align: right;">
+                                {{ value | number }}
+                            </span>
+                        </div>
+                    </ng-template>
+            
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</div>
+
+<!-- ADD CONTACT BUTTON
+<button *ngIf="tastoNew" mat-fab class="accent add-button" id="add-button" (click)="premutoNew()" aria-label="Nuovo" style="cursor: pointer; bottom: 1px;"
+        [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}">
+    <mat-icon style="margin-top: 12px;" title="Nuovo elemento">add</mat-icon>
+</button>
+/ ADD CONTACT BUTTON -->
+

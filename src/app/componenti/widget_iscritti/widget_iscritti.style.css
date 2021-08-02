@@ -1,0 +1,33 @@
+.testo {
+    font-family: 'Arial'; 
+    font-size: 10sx;
+}
+
+.rosso {
+    color: #a00;
+}
+
+.titolo {
+    font-family: 'Arial'; 
+    font-size: 22px;
+}
+
+.bianco {
+    color: white;
+}
+
+.grassetto {
+    font-weight: bold;
+}
+
+.mascheraFirme {
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    width: 90%;
+    height: 90%;
+    background-color: white;
+    border: 1px solid #999;
+    border-radius: 5px;
+    z-index: 1000;
+}

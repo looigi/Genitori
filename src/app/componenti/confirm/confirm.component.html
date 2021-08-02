@@ -1,0 +1,28 @@
+<div mat-dialog-content style="padding: 5px;">
+    <div style="width: 100%; height: 35px; margin: 3px; border-bottom: 1px solid #bbb;">
+        <div style="width: 10%; float: left; text-align: center;">
+            <img [src]="iconaAttenzione" style="width: 35px; height: 35px;">
+        </div>
+        <div style="width: 90%; float: left; text-align: center; padding-top: 2px; padding-right: 10%;">
+            <span style="font-size: 20px; font-weight: bold;">inCalcio</span>
+        </div>
+    </div>
+    <br />
+    <div
+        class="confirm-message"
+        innerHTML="{{message}}"
+        style="padding: 5px; max-height: 400px; overflow: auto;"
+        [style.text-align]='allineamento'>
+    </div>
+    <br />
+</div>
+<div mat-dialog-actions>
+    <div style="width: 100%; border-top: 1px solid #bbb;">
+        <div class="confirm-button btn-yes" style="width: 48%; float: left; text-align: center;">
+            <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Sì</button>
+        </div>
+        <div class="confirm-button btn-no" style="width: 48%; float: right; text-align: center;">
+            <button mat-button (click)="onNoClick()">No</button>
+        </div>
+    </div>
+</div>   

@@ -1,0 +1,55 @@
+<div style="width: 100%; height: 100%;">
+  <div style="width: 85%; height: 100%; float: left; text-align: right;">
+    <!-- <img *ngIf="nomeImmagine" [src]="nomeImmagine" style="cursor: pointer; width: 99%; height: 99%;"
+        (error)="checkImage($event)"
+    > -->
+    <immagine_griglia-component
+        [immagine]="nomeImmagine"
+        [refresh]="refreshImmagine"
+    >
+    </immagine_griglia-component>
+  </div>
+  <div style="width: 14%; height: 100%; float: right;">
+    <!-- <img *ngIf="nomeImmagine && !solaLettura" src="assets/immagini/cambia.png" (click)="cambiaImmagine()" title="Cambia Immagine" style="cursor: pointer; width: 100%; height: 35px;"> -->
+    <mat-icon *ngIf="!solaLettura" (click)="cambiaImmagine()"  title="Cambia immagine" style="cursor: pointer; width: 35px; height: 35px;">cloud_download</mat-icon>
+    <br />
+    <mat-icon *ngIf="nomeImmagine && !solaLettura" (click)="eliminaImmagine()"  title="Elimina immagine" style="cursor: pointer; width: 35px; height: 35px;">delete</mat-icon>
+  </div>
+</div>
+
+<div *ngIf="mascheraEditVisibile" class="oscura"></div>
+
+<!-- <div *ngIf="mascheraEditVisibile" ngDraggable ngResizable [handle]="myHandle" class="resizable-widget mascheraUpload"> -->
+<div *ngIf="mascheraEditVisibile" class="mascheraUpload">
+    <div style="width: 100%; height: 32px; padding: 2px; border-bottom: 1px solid #ccc;
+              background-color: #b3ceff; float: left;">
+    <div #myHandle class="drag-block-handle" style="width: calc(100% - 60px); float: left; text-align: left;">
+      <span style="font-weight: bold;">{{titoloMaschera}}</span>
+    </div>
+    <div style="width: 60px; float: left; text-align: right;">
+      <!-- <img *ngIf="!solaLettura" (click)="salvaDati()" src="assets/immagini/save.png" title="Salva Dati" style="cursor: pointer; width: 28px; height: 28px;"> -->
+      <!-- <img (click)="chiudiMaschera()" src="assets/immagini/close.png" title="Chiudi Maschera" style="cursor: pointer; width: 28px; height: 28px;"> -->
+      <mat-icon (click)="chiudiMaschera()"  title="Chiude maschera" style="cursor: pointer; width: 35px; height: 35px;">close</mat-icon>
+    </div>
+  </div>
+
+  <div style="text-align: left; padding: 2px; width: 100%; height: calc(100% - 32px); overflow: auto; float: left;">
+    <div style="width: 100%; float: left; margin-top: 5px; padding: 3px;">
+      <file-upload #fu
+        [Tipologia]="Tipologia"
+        [multiple]="false"
+        [Arrotonda]="Arrotonda"
+        [Anno]="Anno"
+        [Squadra]="Squadra"
+        [id]="id"
+
+        (chiusuraMaschera)="chiusuraMascheraUpload($event)"
+        (aggiornaImm)="immagineCaricata($event)"
+      >
+      </file-upload>
+      <!-- (change)="attendiUpload = true; fu.upload();" -->
+    </div>
+
+  </div>
+</div>
+

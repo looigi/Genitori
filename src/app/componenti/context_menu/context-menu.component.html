@@ -1,0 +1,22 @@
+<div class="contextmenu" 
+    [ngStyle]="{'left.px': x, 'top.px': y}"
+    [ngClass]="{'d-none': !isShow}">
+  
+    <span *ngIf="tastoShow">
+        <a (click)="premutoShow()" style="cursor: pointer; text-decoration: none; color: black; ">
+            <mat-icon title="Show" style="width: 26px; height: 26px;">remove_red_eye</mat-icon>&nbsp;Visualizza<br />
+        </a>
+    </span>
+  <!-- <mat-icon *ngIf="tastoNew" (click)="premutoNew()"  title="New" style="cursor: pointer; width: 26px; height: 26px;">new_releases</mat-icon> -->
+    <span *ngIf="tastoDelete">
+        <a (click)="premutoDelete()" style="cursor: pointer; text-decoration: none; color: black;">
+            <mat-icon title="Delete" style="width: 26px; height: 26px;">delete</mat-icon>&nbsp;Elimina<br />
+        </a>
+    </span>
+    <span *ngIf="tastoEdit">
+        <a (click)="premutoEdit()" style="cursor: pointer; text-decoration: none; color: black;">
+            <mat-icon title="Edit" style="width: 26px; height: 26px;">edit</mat-icon>&nbsp;Modifica<br />
+        </a>
+    </span>
+    <!-- <mat-icon *ngIf="tastoRefresh" (click)="premutoRefresh()"  title="Refresh" style="cursor: pointer; width: 26px; height: 26px;">refresh</mat-icon> -->
+</div>

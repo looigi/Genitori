@@ -1,0 +1,57 @@
+<div style="
+  position: relative;
+  opacity: .85;
+  width: 100%;
+  height: 67px;
+  display: flex;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-top: 5px;
+  background-color: #dcdcdc;"
+  >
+  <div style="    
+    width: 50%;
+    font-size: 20px;
+    float: left;
+    padding-top: 14px;">
+    Categoria
+  </div>
+  <div style="    
+    width: 50%;
+    float: left;
+    overflow: hidden;
+    display: grid;
+    margin-top: -5px;
+    font-size: 12px !important;">
+    <!-- <combo-component
+      *ngIf="datiCategorie"
+      [Tipologia]="'Dropdown'"
+      [userName]="userName"
+      [data] = "datiCategorie"
+      [campoId]="'idCategoria'"
+      [campoTesto]="'Categoria'"
+      [campoFiltro]="'Categoria'"
+      [NomeCombo]="'cmbDatiDashboard'"
+      [pulisceValoriDiBase]="true"
+      [ricordaUltimoValore]='true'
+      [valoreDefault]="categoriaSelezionata"
+
+      (selezioneEffettuata)="selezioneCategoria($event)"
+    >
+    </combo-component>
+    {{categoriaSelezionata2}} -->
+    <mat-form-field appearance="outline" fxFlex="100">
+        <mat-select [(ngModel)]="categoriaSelezionata2" [disabled]="disabilitata" [(value)]="categoriaSelezionata2" 
+            (selectionChange)="selezioneCategoria($event)">
+            <mat-option *ngFor="let item of datiCategorie" [value]="item.idCategoria">
+                <span *ngIf="item.idCategoria == -1">{{item.Categoria}}</span>
+                <span *ngIf="item.idCategoria > -1">{{item.AnnoCategoria}}-{{item.Categoria}}</span>
+            </mat-option>                         
+        </mat-select>
+        <mat-icon matSuffix class="secondary-text">school</mat-icon>
+    </mat-form-field>
+
+  </div>
+  <hr />
+</div>
+

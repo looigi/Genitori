@@ -1,0 +1,61 @@
+<mat-form-field appearance="outline" fxFlex="100">
+    <mat-label>{{Titolo}}</mat-label>
+
+    <!-- TESTO / NUMERO -->
+    <input
+        *ngIf="tipoCampo2 !== 'tendina' && tipoCampo2 !== 'data'"
+        matInput 
+        type="{{tipoCampo2}}"
+        [readonly]="soloLettura2 ? true : null"
+        (change)="cambia($event)"     
+        (blur)="ritornaTesto($event)"
+        (keypress)="ritornaTesto($event)"
+        [formControl]="campo" 
+        [required]="obbligatorio ? true : null"
+        [maxlength]="lunghezzaMassima"
+        value="{{nomeCampo}}">
+    <!-- TESTO / NUMERO -->
+
+    <!-- COMBO -->
+    <mat-select matInput  
+        *ngIf="tipoCampo2 == 'tendina'"
+        placeholder="{{Titolo}}"
+        [disabled]="soloLettura2 ? true : null"
+        (ngModelChange)="cambioValore($event)"
+        [(ngModel)]="valoreDefault" 
+        [required]="obbligatorio ? true : null"
+    >
+        <mat-option *ngFor="let item of datiCombo" [value]="item[campoID]">
+            {{item[campoDescrizione]}}
+        </mat-option>                                    
+    </mat-select>
+    <!-- COMBO -->
+
+    <!-- DATA
+    <input matInput 
+        *ngIf="tipoCampo2 == 'data'"
+        [matDatepicker]="picker2"
+        (ngModelChange)="cambioData($event)"
+        [formControl]="campo3"
+        [readonly]="true"
+        [(ngModel)]="valoreDefault"
+        [required]="obbligatorio ? true : null"
+    >
+    <mat-datepicker-toggle 
+        *ngIf="tipoCampo2 == 'data' && !soloLettura2"
+        matSuffix [for]="picker2">
+    </mat-datepicker-toggle>
+    <mat-datepicker 
+        #picker2>
+    </mat-datepicker> -->
+
+    <input *ngIf="tipoCampo2 == 'data'" matInput 
+        [matDatepicker]="picker" [formControl]="campo3" (dateChange)="cambioData($event)" [required]="obbligatorio ? true : null">
+    <mat-datepicker-toggle *ngIf="tipoCampo2 == 'data' && !soloLettura2" matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+
+    <mat-icon *ngIf="icona" matSuffix class="secondary-text">{{icona}}</mat-icon>
+    <mat-error>
+        Campo obbligatorio o non valido
+    </mat-error>
+</mat-form-field>         

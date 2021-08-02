@@ -1,0 +1,196 @@
+<div class="oscura"></div>
+
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{dialogTitle}}</span>
+            <button mat-icon-button aria-label="Close dialog" (click)="chiude()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
+            <!-- <img [src]="immUtente" class="avatar contact-avatar huge m-0"                
+                 [alt]="variabiliGlobali.Nome" (error)="checkImage($event)" /> -->
+            <immagine_griglia-component
+                [classePassata]="'avatar contact-avatar huge m-0'"
+                [immagine]="immUtente"
+                [puoIngrandire]="true"
+             >
+             </immagine_griglia-component>
+
+            <div class="contact-name mt-8">{{variabiliGlobali.Cognome}} {{variabiliGlobali.Nome}}</div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+        
+        <div fxLayout="row" fxLayoutAlign="start start">
+            <campo_testo
+                [lunghezzaMassima] ="30"
+                [nomeCampo]="variabiliGlobaliNome"
+                [Titolo]="'Nome'"
+                [soloLettura]="false"
+                [obbligatorio]="true"
+                [tipoCampo]="'text'"
+
+                (ritorno)="variabiliGlobaliNome = $event; controlloValiditaCampi();"
+            ></campo_testo>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+            <campo_testo
+                [lunghezzaMassima] ="30"
+                [nomeCampo]="variabiliGlobaliCognome"
+                [Titolo]="'Cognome'"
+                [soloLettura]="false"
+                [obbligatorio]="true"
+                [tipoCampo]="'text'"
+
+                (ritorno)="variabiliGlobaliCognome = $event; controlloValiditaCampi();"
+            ></campo_testo>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+            <campo_testo
+                [lunghezzaMassima] ="30"
+                [nomeCampo]="variabiliGlobaliEMail"
+                [Titolo]="'E-Mail'"
+                [obbligatorio]="false"
+                [soloLettura]="true"
+                [tipoCampo]="'text'"
+
+                (ritorno)="variabiliGlobaliEMail = $event; controlloValiditaCampi();"
+            ></campo_testo>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+            <campo_testo
+                [lunghezzaMassima] ="30"
+                [nomeCampo]="variabiliGlobaliPassword"
+                [Titolo]="'Password'"
+                [obbligatorio]="false"
+                [soloLettura]="false"
+                [tipoCampo]="'password'"
+
+                (ritorno)="variabiliGlobaliPassword = $event; controlloValiditaCampi();"
+            ></campo_testo>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+            <campo_testo
+                [lunghezzaMassima] ="30"
+                [nomeCampo]="ConfermaPassword"
+                [Titolo]="'Conferma Password'"
+                [obbligatorio]="false"
+                [soloLettura]="false"
+                [tipoCampo]="'password'"
+
+                (ritorno)="ConfermaPassword = $event; controlloValiditaCampi();"
+            ></campo_testo>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+            <campo_testo
+                [lunghezzaMassima] ="50"
+                [nomeCampo]="variabiliGlobaliTelefono"
+                [Titolo]="'Telefono'"
+                [obbligatorio]="false"
+                [soloLettura]="false"
+                [tipoCampo]="'number'"
+
+                (ritorno)="variabiliGlobaliTelefono = $event; controlloValiditaCampi();"
+            ></campo_testo>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+            <campo_testo
+                [lunghezzaMassima] ="50"
+                [nomeCampo]="variabiliGlobaliMail"
+                [Titolo]="'Mail (Comunicazioni)'"
+                [obbligatorio]="false"
+                [soloLettura]="false"
+                [tipoCampo]="'text'"
+
+                (ritorno)="variabiliGlobaliMail = $event; controlloValiditaCampi();"
+            ></campo_testo>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+            <campo_testo
+                [lunghezzaMassima] ="15"
+                [nomeCampo]="variabiliGlobaliPWD"
+                [Titolo]="'Password (Comunicazioni)'"
+                [obbligatorio]="false"
+                [soloLettura]="false"
+                [tipoCampo]="'password'"
+
+                (ritorno)="variabiliGlobaliPWD = $event; controlloValiditaCampi();"
+            ></campo_testo>
+        </div>
+
+        <div *ngIf="permessiContabilita === true" fxLayout="row" fxLayoutAlign="start start">
+            <div style="width: 100%; height: 60px; border: 1px solid #e0e0e0; margin-bottom: 10px; padding: 15px; border-radius: 6px;">
+                <div style="width: 50%; float: left;">
+                    <label>Firma</label>
+                </div>
+                <div style="width: 10%; float: left; text-align: right;">
+                    <mat-checkbox
+                        [disabled] = true
+                        [checked]="variabiliGlobali.EsisteFirmaUtente">
+                    </mat-checkbox>
+                </div>
+                <div style="width: 40%; float: left; text-align: right;">
+                    <mat-icon *ngIf="variabiliGlobali.EsisteFirmaUtente == true" title="Visualizza firma elettronica Utente" style="cursor: pointer;" (click)="visualizzaFirma()">remove_red_eye</mat-icon>
+                    <mat-icon title="Richiede firma elettronica Utente" style="cursor: pointer;" (click)="richiedeFirma()">fingerprint</mat-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <!-- <button *ngIf="action === 'edit'"
+                mat-button
+                class="mr-8"
+                aria-label="Delete"
+                matTooltip="Delete">
+            DELETE
+        </button>
+
+        <button *ngIf="action !== 'edit'"
+                mat-button
+                class="save-button"
+                aria-label="SAVE">
+            ADD
+        </button> -->
+
+        <button 
+                *ngIf="datiCorretti"
+                mat-button
+                (click)="salvaDati()"
+                class="save-button"
+                aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+</div>
+
+<div *ngIf="visualizzaFirmaElettronica" class="oscura2"></div>
+
+<div *ngIf="visualizzaFirmaElettronica" 
+        style="position: absolute; z-index: 9999; width: 40%; height: 40%; top: 30%; left: 30%; 
+            background-color: white; border: 1px solid #999; border-radius: 5px;">
+    <div style="width: 100%; height: 30px; text-align: right;">
+        <!-- <mat-icon title="Elimina Firma" style="cursor: pointer; position: relative; z-index: 1001;" (click)="eliminaFirma()">delete</mat-icon> -->
+        <mat-icon title="Chiude maschera" style="cursor: pointer; position: relative; z-index: 1002;" (click)="chiudeMascheraFirma()">cancel</mat-icon>
+    </div>
+    <!-- <img [src]="nomeImmagineFirma" style="width: 100%; height: 100%; margin-top: -25px; z-index: 1000;"> -->
+    <immagine_griglia-component
+        [stilePassato]="{'width': '100%', 'height': '100%', 'margin-top': '-25px', 'z-index': '1000'}"
+        [immagine]="nomeImmagineFirma"
+        [puoIngrandire]="false"
+    >
+    </immagine_griglia-component>
+</div>

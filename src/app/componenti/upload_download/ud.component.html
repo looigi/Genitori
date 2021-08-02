@@ -1,0 +1,49 @@
+<as-split #splitMenu2 direction="horizontal" [gutterSize]="7" style="width: 100%; height: 100%; border: 1px solid #e0e0e0; border-radius: 5px;">
+    <as-split-area size="50" style="overflow: hidden !important; padding: 3px;">
+        <div *ngIf="!soloLettura2" class="sezione ombra" style="width: 99%; margin-top: 10px;">
+            <div style="width: 100%; text-align: center;"><h3>Upload</h3></div>
+            <hr />
+            <div style="width: 99%">
+                <div style="width: 69%; float: left; margin-top: 5px;">
+                    <!-- <label for="single">single</label> -->
+                    <input type="file" mat-raised-button class="mat-button-base" 
+                        accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff, .pdf"
+                        name="single" style="width: 100%;" #fileInput />
+                </div>
+                <div style="width: 30%; float: right; margin-top: 5px;">
+                    <button type="button" mat-raised-button color="accent" class="mat-raised-button mat-button-base mat-accent" style="width: 100%;"
+                        (click)="inviaUpload()" [disabled]="">
+                        Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div style="clear: both;"></div>
+    </as-split-area>
+    <as-split-area size="50" style="overflow: hidden !important; padding: 3px;">
+
+        <div class="sezione ombra" style="width: 99%; margin-top: 10px;">
+            <div style="width: 100%; text-align: center;"><h3>Allegati</h3></div>
+            <hr />
+            <ul>
+                <li *ngFor="let item of allegati; let i = index" style="margin-top: 10px;">
+                    <!-- <img (click)="apreLink(item.path)" title="Scarica allegato" src="assets\immagini\download.png" style="width: 32px; height: 32px; cursor: pointer;">
+                    <img (click)="eliminaLink(item.nomeFile)" title="Elimina l'allegato" src="assets\immagini\deleteAllegati.png" style="width: 32px; height: 32px; cursor: pointer;"> -->
+
+                    <mat-icon (click)="apreLink(item.path)"  title="Scarica l'allegato" style="cursor: pointer; width: 26px; height: 26px;">visibility</mat-icon>
+                    <mat-icon (click)="eliminaLink(item.nomeFile)"  title="Elimina l'allegato" style="cursor: pointer; width: 26px; height: 26px;">clear</mat-icon>
+
+                    &nbsp;
+                    {{item.nomeFile}}
+                </li>
+            </ul>
+        </div>
+
+    </as-split-area>
+</as-split>
+
+<div *ngIf="attendiUpload" class="attenderePrego">
+  Attendere prego...<br />
+  Elaborazione in corso...
+</div>

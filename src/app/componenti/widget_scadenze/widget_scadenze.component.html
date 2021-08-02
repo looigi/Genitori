@@ -1,0 +1,72 @@
+<div *ngIf="visualizzaWidgetSeCiSonoPermessi" 
+    class="casellaWidget" style="background-color: #039be5; overflow: hidden !important; height: 250px;">
+
+    <div style="width: 100%; float: left; height: 25px;">
+        <div style="float: left; width: 70%; text-align: center; padding-left: 30%; margin-top: -3px;">
+            <span class="titolo bianco grassetto">Scadenze</span>
+        </div>
+        <div style="float: left; width: 30%; text-align: right;">
+            <mat-icon title="Visualizza Tutto" style="cursor: pointer; color: white;" (click)="visualizzaTutto()">visibility</mat-icon>
+            <mat-icon title="Refresh" style="cursor: pointer; color: white;" (click)="caricaDatiWidget(5)">refresh</mat-icon>
+        </div>
+    </div>
+
+    <div style="width: 100%; height: calc(100% - 25px); float: left; overflow: auto; border: 1px solid #999; background-color: white;">
+        <table style="width: 100%;" cellpadding="0" cellspacing ="3">
+            <tr style="border-bottom: 1px solid #999;">
+                <th><span class="testo">Evento</span></th>
+                <th><span class="testo">Descrizione</span></th>
+                <th><span class="testo">Data</span></th>
+            </tr>
+            <tr *ngFor="let item of eventi; index as i;">
+                <td>
+                    <span class="testoPiccolo">{{item.Cosa}}</span>
+                </td>
+                <td>
+                    <span class="testoPiccolo">{{item.PrimoCampo}}&nbsp;{{item.SecondoCampo}}</span>
+                </td>
+                <td>
+                    <span class="testoPiccolo" style="text-align: right;">{{item.Data}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div *ngIf="mascheraFirme == true" class="oscura"></div>
+<div *ngIf="mascheraFirme == true" class="mascheraFirme">
+    <div style="width: 100%; height: 90%; float: left; border: 1px solid #999; overflow: auto;">
+        <table style="width: 100%; background-color: white;" cellpadding="0" cellspacing ="3">
+            <tr>
+                <th><span class="testo">Evento</span></th>
+                <th><span class="testo"></span></th>
+                <th><span class="testo">Data</span></th>
+            </tr>
+            <tr *ngFor="let item of eventi; index as i;">
+                <td>
+                    <span class="testoPiccolo">{{item.Cosa}}</span>
+                </td>
+                <td>
+                    <span class="testoPiccolo">{{item.PrimoCampo}}&nbsp;{{item.SecondoCampo}}</span>
+                </td>
+                <td>
+                    <span class="testoPiccolo">{{item.Data}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="
+        width: 100%;
+        height: 10%;
+        float: left;
+        text-align: center;
+        background-color: #b3cde0;;
+        -webkit-box-shadow: 0px -5px 15px -5px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px -5px 153px -5px rgba(0,0,0,0.75);
+        box-shadow: 0px -5px 15px -5px rgba(0,0,0,0.75);
+    ">
+        <button mat-raised-button type="button" style="margin-top: 6px;" color="warn" (click)="mascheraFirme = false;">
+            Chiudi
+        </button>
+    </div>
+</div>

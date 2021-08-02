@@ -1,0 +1,11 @@
+@import "src/@fuse/scss/fuse";
+
+    .dialog-content-wrapper {
+        max-height: 85vh;
+        margin: auto;
+        width: auto;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+    }
