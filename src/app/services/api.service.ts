@@ -151,6 +151,7 @@ export class ApiService {
       'Utente=' + this.sistemaTesto(params.Utente); // ) + '&' +
       // 'Password=' + this.sistemaTesto(params.Password;
     // console.log('Login:', url);
+    // alert('Login:' + url);
     const ritorno = this.httpclient.get(url);
     // console.log(ritorno);
     return ritorno;

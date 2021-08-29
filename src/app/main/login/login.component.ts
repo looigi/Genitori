@@ -316,6 +316,7 @@ export class LoginComponent implements OnInit, AfterViewInit
                     const campi = utenze[0].split(';');
 
                     const password = this.loginForm.value.password;
+                    // alert('Password Inserita:' + password + ' - Letta: ' + campi[5]);
                     if (password !== campi[5]) {
                         this.errMsg = 'Password non valida';
                         // console.log(campi);

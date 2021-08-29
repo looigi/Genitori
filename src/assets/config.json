@@ -1,8 +1,8 @@
 
 { 
-    "urlWS": "http://192.168.0.227:92/", 
-    "urlPerUpload": "http://192.168.0.227:91/", 
+    "urlWS": "https://svilupposervice.incalcio.cloud/", 
+    "urlPerUpload": "https://sviluppomedia.incalcio.cloud/", 
     "versione": "01.01.01", 
-    "urlFirma": "http://192.168.0.227:93", 
-    "urlGestionePartita": "http://192.168.0.227:94" 
+    "urlFirma": "https://sviluppofirma.incalcio.cloud", 
+    "urlGestionePartita": "https://sviluppogestpartita.incalcio.cloud" 
 }
