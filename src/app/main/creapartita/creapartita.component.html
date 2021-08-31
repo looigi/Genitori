@@ -1,6 +1,6 @@
-    <div *ngIf="mascheraEditAperta" class="oscura"></div>
+    <!-- <div *ngIf="mascheraEditAperta" class="oscura"></div> -->
   
-    <div class="mascheraPartita" *ngIf="mascheraEditAperta && strutturaPerEdit" style="position: fixed !important; overflow: hidden; top: 85px;">
+    <div class="mascheraPartita" *ngIf="mascheraEditAperta && strutturaPerEdit" style="overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;">
         <div class="content">
             <div class="horizontal-stepper-wrapper">
                 <mat-tab-group>
@@ -343,7 +343,7 @@
                     <mat-tab label="Convocati">
                         <div fxFlex="1 0 auto" fxLayout="column" class="tab-interno">
                             <div style="width: 100%; height: 100%;">
-                                <div style="width: 50%; float: left; height: 100%; overflow: auto;">
+                                <div style="width: 100%; float: left; height: 50%; overflow: auto;">
                                     <div style="width: 100%; text-align: center; padding-top: -5px; border: 1px solid #999; background-color: #e2e2e2;">
                                         <h3>NON Convocati</h3>
                                     </div>
@@ -369,7 +369,7 @@
                                         </griglia2>                                    
                                     </div>
                                 </div>
-                                <div style="width: 50%; float: left; height: 100%; overflow: auto;">
+                                <div style="width: 100%; float: left; height: 50%; overflow: auto;">
                                     <div style="width: 100%; text-align: center; border: 1px solid #999; background-color: #e2e2e2;">
                                         <h3>Convocati</h3>
                                     </div>
