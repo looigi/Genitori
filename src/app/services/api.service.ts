@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from './httpclient.service';
 import { VariabiliGlobali } from '../global.component';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs/observable/timer';
 import { Observable } from 'rxjs';
 
@@ -17,10 +17,25 @@ export class ApiService {
   constructor(
     private httpclient: HttpClient,
     private router: Router,
+    private route: ActivatedRoute,
     private location: Location,
     private variabiliGlobali: VariabiliGlobali
     ) {
-      this.controlloPresenzaUtente(false);
+      this.route.queryParams.subscribe(params => {
+        const Utente: string = params['Utente'];
+        const Password: string = params['Password'];
+
+        if (Utente && Utente !== '') {
+            this.variabiliGlobali.entraAutomaticamente = true;
+            this.variabiliGlobali.utenteAutomatico = Utente;
+            this.variabiliGlobali.passwordAutomatica = Password;
+            // alert ('2: ' + Utente + ' - ' + Password);
+        } else {
+          if (!this.variabiliGlobali.nonControllare) {
+             this.controlloPresenzaUtente(false);
+          }
+        }
+      });
 
       setTimeout(() => {
         // console.log('Spengo attesa iniziale');
@@ -56,18 +71,16 @@ export class ApiService {
       if (environment.debug === false && this.variabiliGlobali.Tipologia !== 'Amministratore') {
         if (this.variabiliGlobali.Utente === '' || this.variabiliGlobali.Utente === undefined) {
           if (!this.variabiliGlobali.codiceFirma || this.variabiliGlobali.codiceFirma !== '') {
-              // alert('Sessione scaduta 1: ' + this.location.path());
+            // alert('Sessione scaduta 1: ' + this.location.path());
 
-              /* this.variabiliGlobali.Anno = localStorage.getItem('GC_Anno');
-              this.variabiliGlobali.Utente = localStorage.getItem('GC_UserName');
-              this.variabiliGlobali.Password = localStorage.getItem('GC_Password');
-              this.variabiliGlobali.CodAnnoSquadra = localStorage.getItem('GC_CodAnnoSquadra');
-              this.variabiliGlobali.Squadra = localStorage.getItem('GC_Squadra'); */
+            /* this.variabiliGlobali.Anno = localStorage.getItem('GC_Anno');
+            this.variabiliGlobali.Utente = localStorage.getItem('GC_UserName');
+            this.variabiliGlobali.Password = localStorage.getItem('GC_Password');
+            this.variabiliGlobali.CodAnnoSquadra = localStorage.getItem('GC_CodAnnoSquadra');
+            this.variabiliGlobali.Squadra = localStorage.getItem('GC_Squadra'); */
 
-              // if (this.variabiliGlobali.consideraIlRitorno === true) {
-                const dove = 'login';              
-                this.router.navigate([dove]);
-              // }
+            const dove = 'login';              
+            this.router.navigate([dove]);
           }
         }
       } else {

@@ -74,6 +74,10 @@ export class VariabiliGlobali {
   pagamentiRegistrati = false;
   Cashback = false;
   ListaLicenze;
+  entraAutomaticamente = false;
+  utenteAutomatico = '';
+  passwordAutomatica = '';
+  nonControllare = true;
   
   idPerFirma = '';
   genitorePerFirma = '';
@@ -1141,4 +1145,51 @@ export class VariabiliGlobali {
       }, 1000);
   }
   */
+
+  cripta(s) {
+    const x = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+    // console.log('Stringa:', s);
+    // console.log('Codice random:', x);
+    let rit = x + ';';
+    // console.log('Rit 1:', rit);
+    for (let i = 0; i <= s.length; i++) {
+      let a = s.charCodeAt(i);
+      a += x;
+      rit += a +';';
+      // console.log('Rit ' + i + ':', rit);
+    }
+    for (let i = 0; i <= 5; i++) {
+      const x = Math.floor(Math.random() * (255 - 1 + 1)) + 1;
+      rit += x +';';
+      // console.log('Rit ' + (i + 100) + ':', rit);
+    }
+    rit += s.length + ';';
+
+    return rit;
+  }
+
+  decripta(s) {
+    let rit = '';
+    if (s && s !== '') {
+      const c = s.split(';');
+      // console.log(c, +c[c.length - 2], c.length - 2);
+      const differenza = +c[0];
+      const lunghezza = +c[c.length - 2];
+      // console.log('Differenza: ', differenza);
+      // console.log('Lunghezza: ', lunghezza);
+
+      for (let i = 1; i < lunghezza + 1; i ++) {
+        // console.log('Carattere ' + i + ': ', c[i]);
+        let v = +c[i];
+        // console.log('Valore Carattere ' + i + ': ', v);
+        v -= differenza;
+        // console.log('Carattere ' + i + '. Differenza: ', v);
+        const car = String.fromCharCode(v);
+        // console.log('Carattere ' + i + ': ', car);
+        rit += car;
+      }
+    }
+
+    return rit;
+  }
 }

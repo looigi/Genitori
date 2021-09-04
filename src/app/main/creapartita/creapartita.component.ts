@@ -10,6 +10,7 @@ import { DatePipe, DOCUMENT } from '@angular/common';
 import { ConfirmationDialogComponent } from 'app/componenti/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
     selector   : 'creapartita',
@@ -27,6 +28,8 @@ export class CreaPartitaComponent implements OnInit, OnDestroy
     @Input() soloVisualizzazione = true;
 
     @Output() chiusuraMaschera: EventEmitter<string> = new EventEmitter<string>();
+  
+    ColumnMode = ColumnMode;
 
     datiCategorie;
     gridDataGiocatori;

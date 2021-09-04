@@ -44,6 +44,7 @@ export class Griglia2Component implements OnInit, OnChanges, AfterViewChecked
     @Input() nomiColonne;
     @Input() caricamentoInCorso = 'OK';
     @Input() tipiCampi;
+    @Input() larghezzaColonne = ColumnMode.force;
   
     @Output() cellClick: EventEmitter<string> = new EventEmitter<string>();
     @Output() tastoNewEmit: EventEmitter<string> = new EventEmitter<string>();

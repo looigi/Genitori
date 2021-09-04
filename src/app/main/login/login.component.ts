@@ -209,18 +209,28 @@ export class LoginComponent implements OnInit, AfterViewInit
                 // setTimeout(() => {
                 const m = localStorage.getItem('GC_Memorizza');
                 if (+m === 1) {
-                    // console.log('Memorizza:', m, localStorage.getItem('GC_UserName'));
-                    this.valueMemorizza = true;
-                    this.memorizza = true;
-                    emailM = localStorage.getItem('GC_UserName');
-                    passM = localStorage.getItem('GC_Password');
-                    this.idAnno = +localStorage.getItem('GC_Anno');
+                    if (!this.variabiliGlobali.entraAutomaticamente) {
+                        // console.log('Memorizza:', m, localStorage.getItem('GC_UserName'));
+                        this.valueMemorizza = true;
+                        this.memorizza = true;
+                        emailM = localStorage.getItem('GC_UserName');
+                        passM = localStorage.getItem('GC_Password');
+                        this.idAnno = +localStorage.getItem('GC_Anno');
+                    }
                 } else {
                     this.valueMemorizza = false;
                     this.memorizza = false;
                     emailM = '';
                     passM = '';
                     this.idAnno = -1;
+                }
+                
+                if (this.variabiliGlobali.entraAutomaticamente) {
+                    const Utente: string = this.variabiliGlobali.utenteAutomatico;
+                    const Password: string = this.variabiliGlobali.passwordAutomatica;
+
+                    emailM = Utente;
+                    passM = this.variabiliGlobali.decripta(Password);
                 }
 
                 this.loginForm = this._formBuilder.group({
@@ -233,7 +243,17 @@ export class LoginComponent implements OnInit, AfterViewInit
                     // this.fileHtml = this.sanitizer.bypassSecurityTrustHtml(res);
                     this.testoPolicyPrivacy = res;
                 });
+
                 // }, 1000);
+                if (this.variabiliGlobali.entraAutomaticamente) {
+                    setTimeout(() => {
+                        this.variabiliGlobali.entraAutomaticamente = false;
+
+                        this.login();
+                    }, 100);
+                } else {
+                    this.variabiliGlobali.nonControllare = false;
+                }
             }
             
             // this.variabiliGlobali.consideraIlRitorno = true;            
