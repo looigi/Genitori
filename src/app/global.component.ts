@@ -774,7 +774,9 @@ export class VariabiliGlobali {
                       navigation2[0].children = nuovo2;
                   }
                   break;
-              case 'GENITORE':
+                case 'DIRIGENTE GENITORE':
+                case 'ALLENATORE GENITORE':
+                case 'GENITORE':
                   r.forEach(element => {
                       if (element.id === 'genitori' || element.id === 'home' || element.id === 'contatti') {
                         if (element.children) {
@@ -792,6 +794,7 @@ export class VariabiliGlobali {
                   });
                   navigation2[0].children = nuovo2;
                   break;
+
               case 'GIOCATORE':
                   r.forEach(element => {
                       if (element.id === 'giocatori' || element.id === 'home') {
@@ -810,7 +813,8 @@ export class VariabiliGlobali {
                   });
                   navigation2[0].children = nuovo2;
                   break;
-              case 'DIRIGENTE GENITORE':
+
+              /* case 'DIRIGENTE GENITORE':
                 r.forEach(element => {
                   if (element.id === 'dirigenti' || element.id === 'genitori' || element.id === 'home' || element.id === 'contatti') {
                     if (element.children) {
@@ -830,53 +834,6 @@ export class VariabiliGlobali {
                 break;
 
               case 'DIRIGENTE':
-                  /* r.forEach(element => {
-                      const rigaPadre = element.id.toUpperCase().trim();
-                      // console.log('Controllo padre:', rigaPadre);
-                      let aggiungi = false;
-                      let menuFisso = false;
-                      if (this.Permessi && this.Permessi[rigaPadre]) { aggiungi = true; }
-                      if (aggiungi === false) {
-                          if ((rigaPadre === 'GENITORI' && tipologia.indexOf('GENITORE') > -1) 
-                              || rigaPadre === 'HOME') {
-                              aggiungi = true;
-                              menuFisso = true;
-                          }
-                      }
-                      if (aggiungi) {
-                          const ele = {
-                              icon: element.icon,
-                              id: element.id,
-                              title: element.title,
-                              translate: element.translate,
-                              type: element.type,
-                              url: element.url,
-                              children: null
-                          };
-                          // console.log('Aggiungo padre:', ele);
-                          if (element.children && element.id !== 'amministrazione' && element.id !== 'super user') {
-                              const rr = element.children;
-                              const nuovo = new Array();
-                              rr.forEach(element2 => {
-                                  const rigaFiglio = element2.id.toUpperCase().trim();
-                                  // console.log('Controllo figlio:', rigaPadre, rigaFiglio);
-                                  if (menuFisso === false) {
-                                      if (this.Permessi && this.Permessi[rigaFiglio]) {
-                                          // console.log('Aggiungo figlio:', rigaPadre, rigaFiglio);
-                                          nuovo.push(element2);
-                                      }
-                                  } else {
-                                      nuovo.push(element2);
-                                  }
-                              });
-                              ele.children = nuovo;
-                          }
-                          nuovo2.push(ele);
-                      }
-                  });
-                  navigation2[0].children = nuovo2;
-                  // console.log(this.navigation2[0]);
-                  break; */
                   r.forEach(element => {
                     if (element.id === 'dirigenti' || element.id === 'home' || element.id === 'contatti') {
                       if (element.children) {
@@ -893,10 +850,11 @@ export class VariabiliGlobali {
                     }
                 });
                 navigation2[0].children = nuovo2;
-                break;
+                break; */
 
+              case 'DIRIGENTE':
               case 'ALLENATORE':
-                r.forEach(element => {
+                  r.forEach(element => {
                   if (element.id === 'allenatori' || element.id === 'home' || element.id === 'contatti') {
                     if (element.children) {
                         const rr = element.children;
@@ -914,7 +872,7 @@ export class VariabiliGlobali {
                 navigation2[0].children = nuovo2;
                 break;
 
-              case 'ALLENATORE GENITORE':
+              /* case 'ALLENATORE GENITORE':
                 r.forEach(element => {
                   if (element.id === 'allenatori' || element.id === 'genitori' || element.id === 'home' || element.id === 'contatti') {
                     if (element.children) {
@@ -931,7 +889,7 @@ export class VariabiliGlobali {
                   }
                 });
                 navigation2[0].children = nuovo2;
-                break;
+                break; */
 
               default:
                 navigation2[0] = null;

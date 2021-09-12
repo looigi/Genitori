@@ -61,7 +61,7 @@ export class ContattiComponent implements OnInit
         this.caricamentoDatiInCorso = 'CARICAMENTO';
         const params = {
             Squadra: this.variabiliGlobali.CodAnnoSquadra,
-            idCategoria: -1
+            Utente: this.variabiliGlobali.EMail
         };
         this.apiService.ritornaDatiContatti(params)
         .map(response => response.text())

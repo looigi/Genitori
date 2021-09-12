@@ -80,9 +80,10 @@ export class WidgetScadenzeComponent implements OnInit, OnChanges {
     caricaDatiWidget(limite) {
         const params = {
             Squadra: this.variabiliGlobali.CodAnnoSquadra,
-            Limite: limite
+            Limite: limite,
+            Utente: this.variabiliGlobali.EMail
         };
-        this.apiService.RitornaProssimiEventi(params)
+        this.apiService.RitornaProssimiEventiUtenti(params)
         .map(response => response.text())
         .subscribe(
           data => {
@@ -126,7 +127,7 @@ export class WidgetScadenzeComponent implements OnInit, OnChanges {
 
                 this.eventi = eventi;
               } else {
-                this.variabiliGlobali.mostraMessaggio(data2, false);
+                // this.variabiliGlobali.mostraMessaggio(data2, false);
               }
             }
           },

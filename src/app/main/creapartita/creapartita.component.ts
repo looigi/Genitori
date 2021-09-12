@@ -1493,11 +1493,11 @@ export class CreaPartitaComponent implements OnInit, OnDestroy
                     // console.log(this.campiUlteriori);
         
                     this.indirizzoConvocazione = this.variabiliGlobali.urlWS + '/Allegati/' + this.variabiliGlobali.CodAnnoSquadra + '/' +
-                        'Convocazioni/Anno' + this.variabiliGlobali.Anno + '/Partite/Partita_' + this.idPartita2 + '.html';
-                    const esiste1 = this.variabiliGlobali.esisteUrl(this.indirizzoConvocazione);
-                    if (esiste1 === false) {
-                        this.indirizzoConvocazione = '';
-                    }
+                        'Convocazioni/Anno' + this.variabiliGlobali.Anno + '/Partite/Partita_' + this.idPartita2 + '.pdf';
+                    // const esiste1 = this.variabiliGlobali.esisteUrl(this.indirizzoConvocazione);
+                    // if (esiste1 === false) {
+                    //     this.indirizzoConvocazione = '';
+                    // }
         
                     this.indirizzoSchedaPartita = this.variabiliGlobali.urlWS + 'Partite/' +
                     this.variabiliGlobali.Squadra + '/' + this.variabiliGlobali.Anno + '_' +

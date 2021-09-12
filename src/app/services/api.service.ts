@@ -2883,7 +2883,7 @@ export class ApiService {
     this.controlloPresenzaUtente(false);
     const url = this.variabiliGlobali.urlWS + 'wsGenerale.asmx/RitornaDatiContatti?' +
       'Squadra=' + this.sistemaTesto(params.Squadra) + '&' +
-      'idCategoria=' + this.sistemaTesto(params.idCategoria)
+      'Utente=' + this.sistemaTesto(params.Utente)
     ;
     // console.log('Ritorna dati contatti:', url);
     const ritorno = this.httpclient.get(url);
@@ -3289,6 +3289,17 @@ export class ApiService {
     const url = this.variabiliGlobali.urlWS + 'wsWidget.asmx/RitornaProssimiEventi?' +
       'Squadra=' + this.sistemaTesto(params.Squadra) + '&' +
       'Limite=' + this.sistemaTesto(params.Limite);
+    // console.log('Ritorna arbitri:', url);
+    const ritorno = this.httpclient.get(url);
+    return ritorno;
+  }
+
+  RitornaProssimiEventiUtenti(params) {
+    this.controlloPresenzaUtente(true);
+    const url = this.variabiliGlobali.urlWS + 'wsWidget.asmx/RitornaProssimiEventiUtenti?' +
+      'Squadra=' + this.sistemaTesto(params.Squadra) + '&' +
+      'Limite=' + this.sistemaTesto(params.Limite) + '&' +
+      'Utente=' + this.sistemaTesto(params.Utente);
     // console.log('Ritorna arbitri:', url);
     const ritorno = this.httpclient.get(url);
     return ritorno;
